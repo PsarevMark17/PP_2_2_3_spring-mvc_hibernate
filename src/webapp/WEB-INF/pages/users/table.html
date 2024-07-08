@@ -19,34 +19,43 @@
      align-items: center;
      text-align: center;
      min-height: 100vh;">
-    <form th:method="POST" th:action="@{/users}" th:object="${newUser}">
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Surname</th>
-            <th>Name</th>
-            <th>Patronymic</th>
-            <th>Update</th>
-            <th>Delete</th>
-        </tr>
-        <th:block th:each="user : ${users}">
+    <form method="POST" th:action="@{/users}" th:object="${newUser}" id="Create">
+        <form></form>
+        <table>
             <tr>
-                <td th:text="${user.id}"></td>
-                <td th:text="${user.surname}"></td>
-                <td th:text="${user.name}"></td>
-                <td th:text="${user.patronymic}"></td>
-                <td><button th:onclick="|location.href='@{/users/update(id=${user.id})}'|" type="button">Update</button></td>
-                <td><button th:onclick="|location.href='@{/users/delete(id=${user.id})}'|" type="button">Delete</button></td>
+                <th>Id</th>
+                <th>Surname</th>
+                <th>Name</th>
+                <th>Patronymic</th>
+                <th>Update</th>
+                <th>Delete</th>
             </tr>
-        </th:block>
-        <tr>
-            <td><input type="submit" value="Create"/></td>
-            <td><input placeholder="Surname" type="text" th:field="*{surname}"/></td>
-            <td><input placeholder="Name" type="text" th:field="*{name}"/></td>
-            <td><input placeholder="Patronymic" type="text" th:field="*{patronymic}"/></td>
-            <td colspan="2">Meow-meow-meow</td>
-        </tr>
-    </table>
+            <th:block th:each="user : ${users}">
+                <tr>
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.surname}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.patronymic}"></td>
+                    <td>
+                        <button th:onclick="|location.href='@{/users/update(id=${user.id})}'|" type="button">Update
+                        </button>
+                    </td>
+                    <td>
+                        <form method="POST" th:action="@{/users/delete}" th:id="${user.id}">
+                            <input th:form="${user.id}" type="hidden" name="deleteId" th:value="${user.id}"/>
+                            <input th:form="${user.id}" type="submit" value="Delete"/>
+                        </form>
+                    </td>
+                </tr>
+            </th:block>
+            <tr>
+                <td><input form="Create" type="submit" value="Create"/></td>
+                <td><input form="Create" placeholder="Surname" type="text" th:field="*{surname}"/></td>
+                <td><input form="Create" placeholder="Name" type="text" th:field="*{name}"/></td>
+                <td><input form="Create" placeholder="Patronymic" type="text" th:field="*{patronymic}"/></td>
+                <td colspan="2">Meow-meow-meow</td>
+            </tr>
+        </table>
     </form>
 </div>
 </body>
