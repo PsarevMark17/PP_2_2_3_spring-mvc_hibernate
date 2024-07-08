@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users Table</title>
+</head>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 5px
+    }
+</style>
+<body>
+
+<div style="display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     text-align: center;
+     min-height: 100vh;">
+    <form th:method="POST" th:action="@{/users}" th:object="${newUser}">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Surname</th>
+            <th>Name</th>
+            <th>Patronymic</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        <th:block th:each="user : ${users}">
+            <tr>
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.surname}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.patronymic}"></td>
+                <td><button th:onclick="|location.href='@{/users/update(id=${user.id})}'|" type="button">Update</button></td>
+                <td><button th:onclick="|location.href='@{/users/delete(id=${user.id})}'|" type="button">Delete</button></td>
+            </tr>
+        </th:block>
+        <tr>
+            <td><input type="submit" value="Create"/></td>
+            <td><input type="text" th:field="*{surname}"/></td>
+            <td><input type="text" th:field="*{name}"/></td>
+            <td><input type="text" th:field="*{patronymic}"/></td>
+            <td colspan="2">Meow-meow-meow</td>
+        </tr>
+    </table>
+    </form>
+</div>
+</body>
+</html>
